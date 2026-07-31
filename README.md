@@ -2,6 +2,10 @@
 
 Governed model access for Go 1.23+.
 
+```bash
+go get github.com/octopusos/octoryn-go@v0.1.0
+```
+
 ```go
 client, err := octoryn.NewClient(os.Getenv("OCTORYN_API_KEY"))
 result, err := client.GenerateText(ctx, octoryn.GenerateTextParams{
