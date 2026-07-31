@@ -1,4 +1,3 @@
-module github.com/octopusos/octoryn-go
+module github.com/octoryn/octoryn-go
 
 go 1.23
-

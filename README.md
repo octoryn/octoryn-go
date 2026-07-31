@@ -3,7 +3,7 @@
 Governed model access for Go 1.23+.
 
 ```bash
-go get github.com/octopusos/octoryn-go@v0.1.0
+go get github.com/octoryn/octoryn-go@v0.1.1
 ```
 
 ```go
