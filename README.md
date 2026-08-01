@@ -9,7 +9,7 @@ go get github.com/octoryn/octoryn-go@v0.1.1
 ```go
 client, err := octoryn.NewClient(os.Getenv("OCTORYN_API_KEY"))
 result, err := client.GenerateText(ctx, octoryn.GenerateTextParams{
-    Model:  "policy/au-enterprise",
+    Model:  "openai/gpt-4.1-mini",
     Prompt: "Explain this routing decision.",
 })
 fmt.Println(result.Text, result.Octoryn.EvidenceHash)

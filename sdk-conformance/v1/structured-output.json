@@ -1,0 +1,24 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "risk": {
+        "type": "string",
+        "enum": ["low", "medium", "high"]
+      },
+      "score": {
+        "type": "number"
+      }
+    },
+    "required": ["risk", "score"],
+    "additionalProperties": false
+  },
+  "valid": {
+    "risk": "low",
+    "score": 7
+  },
+  "invalid": {
+    "risk": "unknown",
+    "score": "seven"
+  }
+}

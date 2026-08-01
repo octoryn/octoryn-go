@@ -1,0 +1,31 @@
+{
+  "id": "chatcmpl_conformance",
+  "object": "chat.completion",
+  "created": 1785460000,
+  "model": "policy/frontier",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Governed answer",
+        "tool_calls": [
+          {
+            "id": "call_weather",
+            "type": "function",
+            "function": {
+              "name": "getWeather",
+              "arguments": "{\"city\":\"Sydney\"}"
+            }
+          }
+        ]
+      },
+      "finish_reason": "tool_calls"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 4,
+    "completion_tokens": 2,
+    "total_tokens": 6
+  }
+}

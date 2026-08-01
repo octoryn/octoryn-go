@@ -1,0 +1,7 @@
+data: {"id":"chatcmpl_stream","object":"chat.completion.chunk","created":1785460000,"model":"policy/frontier","choices":[{"index":0,"delta":{"role":"assistant","content":"Octo"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl_stream","object":"chat.completion.chunk","created":1785460000,"model":"policy/frontier","choices":[{"index":0,"delta":{"content":"ryn","tool_calls":[{"index":0,"id":"call_weather","type":"function","function":{"name":"getWe","arguments":"{\"city\":"}}]},"finish_reason":null}]}
+
+data: {"id":"chatcmpl_stream","object":"chat.completion.chunk","created":1785460000,"model":"policy/frontier","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"name":"ather","arguments":"\"Sydney\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":3,"completion_tokens":2,"total_tokens":5}}
+
+data: [DONE]

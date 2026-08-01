@@ -12,12 +12,18 @@ import (
 
 func conformanceFixture(t *testing.T, name string) []byte {
 	t.Helper()
-	path := filepath.Join("..", "sdk-conformance", "v1", name)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
+	paths := []string{
+		filepath.Join("..", "sdk-conformance", "v1", name),
+		filepath.Join("sdk-conformance", "v1", name),
 	}
-	return data
+	for _, path := range paths {
+		data, err := os.ReadFile(path)
+		if err == nil {
+			return data
+		}
+	}
+	t.Fatalf("missing conformance fixture %q in %v", name, paths)
+	return nil
 }
 
 func testClient(t *testing.T, handler http.HandlerFunc) *Client {
@@ -37,6 +43,9 @@ func testClient(t *testing.T, handler http.HandlerFunc) *Client {
 
 func TestGenerateTextAndTools(t *testing.T) {
 	client := testClient(t, func(writer http.ResponseWriter, request *http.Request) {
+		if request.URL.Path != "/v1/chat/completions" {
+			t.Fatalf("unexpected request path %q", request.URL.Path)
+		}
 		if request.Header.Get("Authorization") != "Bearer test-key" {
 			t.Fatal("missing authorization")
 		}
