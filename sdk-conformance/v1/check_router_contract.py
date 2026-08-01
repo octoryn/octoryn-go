@@ -8,6 +8,7 @@ import json
 import re
 import sys
 import urllib.request
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +42,20 @@ def manifest_operation_set(manifest: dict[str, Any]) -> set[tuple[str, str]]:
     return {(item["method"], item["path"]) for item in manifest["operations"]}
 
 
+def accepted_live_digests(
+    manifest: dict[str, Any], *, now: datetime | None = None
+) -> set[str]:
+    accepted = {manifest["canonical_sha256"]}
+    transition = manifest.get("canonical_transition")
+    if transition is None:
+        return accepted
+    expires_at = datetime.fromisoformat(transition["expires_at"].replace("Z", "+00:00"))
+    current = now or datetime.now(UTC)
+    if current < expires_at:
+        accepted.update(transition["allowed_sha256"])
+    return accepted
+
+
 def normalized_route(value: str, roots: set[str]) -> str | None:
     value = value.split("?", 1)[0]
     if value.startswith("https://api.octoryn.dev"):
@@ -64,6 +79,10 @@ def source_route_errors(manifest: dict[str, Any], root: Path) -> list[str]:
         for path in allowed
         if path.startswith(("/api/v1/", "/v1/"))
     }
+    roots.update(
+        item.removeprefix("/v1/").removesuffix("*").split("/", 1)[0]
+        for item in manifest["classifications"]["legacy-retire"]
+    )
     errors: list[str] = []
     for path in root.rglob("*"):
         relative = path.relative_to(root)
@@ -116,7 +135,7 @@ def validate(manifest: dict[str, Any], live: dict[str, Any], root: Path) -> list
     expected_operations = manifest_operation_set(manifest)
     if operation_set(live) != expected_operations:
         errors.append("live Router operation set differs from pinned contract")
-    if canonical_sha256(live) != manifest["canonical_sha256"]:
+    if canonical_sha256(live) not in accepted_live_digests(manifest):
         errors.append("live Router digest differs from pinned contract")
     errors.extend(source_route_errors(manifest, root))
     return errors

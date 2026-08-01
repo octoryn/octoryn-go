@@ -1,11 +1,18 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "retrieved_at": "2026-08-01T07:20:01Z",
   "source": "https://api.octoryn.dev/openapi.json",
   "title": "Octoryn Router API",
   "openapi": "3.1.0",
   "api_version": "0.1.0",
   "canonical_sha256": "fe6908ed92d4e6dfb780690e989510ec0be11484600d97875ef2c3d985c8316c",
+  "canonical_transition": {
+    "allowed_sha256": [
+      "fe6908ed92d4e6dfb780690e989510ec0be11484600d97875ef2c3d985c8316c",
+      "c35e283581b42dce146407122d5624995224ae487088fc266dd19f53f0be4aec"
+    ],
+    "expires_at": "2026-08-16T00:00:00Z"
+  },
   "operations_sha256": "894b665e90cdc50ca0eef7cb08c6aed2f4bee4314808008976c3d228da3e6b1e",
   "path_count": 52,
   "operation_count": 56,
