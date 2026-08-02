@@ -25,6 +25,9 @@ EXPECTED_CANONICAL_SHA256 = (
 EXPECTED_OPERATIONS_SHA256 = (
     "894b665e90cdc50ca0eef7cb08c6aed2f4bee4314808008976c3d228da3e6b1e"
 )
+EXPECTED_CLASSIFICATIONS_SHA256 = (
+    "775ed6252bd3520901f23d236be41de69a9bb963005e55df9b3b6c1a868767f2"
+)
 
 
 def canonical_sha256(value: Any) -> str:
@@ -172,6 +175,8 @@ def validate(manifest: dict[str, Any], live: dict[str, Any], root: Path) -> list
         sorted(manifest["operations"], key=lambda item: (item["method"], item["path"]))
     ) != EXPECTED_OPERATIONS_SHA256:
         errors.append("pinned Router operations do not match trusted lock")
+    if canonical_sha256(manifest.get("classifications")) != EXPECTED_CLASSIFICATIONS_SHA256:
+        errors.append("pinned Router classifications differ from trusted lock")
     if "canonical_transition" in manifest:
         errors.append("expired Router contract transition remains pinned")
     if operation_set(live) != expected_operations:
